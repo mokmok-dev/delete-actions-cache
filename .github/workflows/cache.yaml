@@ -1,0 +1,19 @@
+name: Cache
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-cache
+  cancel-in-progress: true
+jobs:
+  clean:
+    name: Clean GitHub Actions cache
+    runs-on: ubuntu-latest
+    env:
+      DEBUG: true
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
