@@ -16,8 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: mokmok-dev/delete-actions-cache@main
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 
