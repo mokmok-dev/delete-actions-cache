@@ -1,7 +1,7 @@
 name: "Delete GitHub Actions cache"
 description: "Delete GitHub Actions cache"
 branding:
-  logo: "delete"
+  icon: "delete"
   color: "gray-dark"
 runs:
   using: "composite"
