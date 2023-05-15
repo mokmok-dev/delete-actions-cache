@@ -5,12 +5,10 @@ inputs:
     description: GitHub token
     default: ${{ github.token }}
     required: false
-outputs:
-  runs:
-    using: "composite"
+runs:
+  using: "composite"
   steps:
-    - 
-      run: |
+    - run: |
         gh extension install actions/gh-actions-cache
 
         mergedPRNumbers=$(gh pr list --state merged --json number | jq .[].number)
