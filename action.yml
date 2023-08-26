@@ -3,15 +3,11 @@ description: "Delete GitHub Actions cache"
 branding:
   icon: "delete"
   color: "gray-dark"
-inputs:
-  repository:
-    description: "repository owner/repo"
-    required: true
 runs:
   using: "composite"
   steps:
     - shell: bash
       run: |
         gh extension install actions/gh-actions-cache
-        defaultBranch=$(gh api repos/${ inputs.repository } --jq '.default_branch')
+        defaultBranch=$(gh api repos/${ github.repository } --jq '.default_branch')
         gh actions-cache list --limit 100 | grep -v "refs/heads/${defaultBranch}" | cut -f 1 | xargs -I{} gh actions-cache delete --confirm {}
