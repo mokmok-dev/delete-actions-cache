@@ -9,10 +9,5 @@ runs:
     - shell: bash
       run: |
         gh extension install actions/gh-actions-cache
-
-        mergedPRNumbers=$(gh pr list --state merged --json number | jq .[].number)
-
-        for prNumber in $mergedPRNumbers
-        do
-          gh actions-cache list -B refs/pull/$prNumber/merge | cut -f 1 | xargs -I{} gh actions-cache delete --confirm {}
-        done
+        defaultBranch=$(gh api repos/${ github.repository } --jq '.default_branch')
+        gh actions-cache list --limit 100 | grep -v "refs/heads/${defaultBranch}" | cut -f 1 | xargs -I{} gh actions-cache delete --confirm {}
