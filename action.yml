@@ -10,7 +10,7 @@ runs:
       run: |
         gh extension install actions/gh-actions-cache
 
-        mergedPRNumbers=$(gh pr list --state merged --json number | jq .[].number)
+        mergedPRNumbers=$(gh pr list --state merged --json number | jq -r '.[].number')
 
         for prNumber in $mergedPRNumbers
         do
