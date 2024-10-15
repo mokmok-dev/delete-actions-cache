@@ -11,8 +11,13 @@ runs:
         gh extension install actions/gh-actions-cache
 
         mergedPRNumbers=$(gh pr list --state merged --json number | jq -r '.[].number')
-
         for prNumber in $mergedPRNumbers
+        do
+          gh actions-cache list -L 100 -B refs/pull/$prNumber/merge | cut -f 1 | xargs -I{} gh actions-cache delete --confirm {}
+        done
+
+        closedPRNumbers=$(gh pr list --state closed --json number | jq -r '.[].number')
+        for prNumber in $closedPRNumbers
         do
           gh actions-cache list -L 100 -B refs/pull/$prNumber/merge | cut -f 1 | xargs -I{} gh actions-cache delete --confirm {}
         done
